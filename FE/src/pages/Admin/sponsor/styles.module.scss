@@ -1,0 +1,9 @@
+.formWrapper {
+  .form-item__label {
+    &--invisible {
+      :global(.ant-form-item-label) {
+        visibility: hidden;
+      }
+    }
+  }
+}

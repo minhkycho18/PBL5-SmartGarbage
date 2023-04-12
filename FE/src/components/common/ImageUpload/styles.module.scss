@@ -1,0 +1,21 @@
+.uploadWrapper {
+  width: 200px !important;
+  height: 200px !important;
+
+  :global {
+    .ant-upload.ant-upload-select {
+      height: 100% !important;
+      width: 100% !important;
+    }
+    .ant-upload {
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: auto;
+    }
+  }
+}
