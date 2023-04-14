@@ -14,12 +14,14 @@ const int echoPin = 14;     // chân echo của HC-SR04
 
 long duration;
 int distance;
-const int FLASH_PIN = 4;
+// const int FLASH_PIN = 4;
 
-const char* ssid = "RIO TANG 2";
-const char* password = "20032001";
+// const char* ssid = "RIO TANG 2";
+// const char* password = "20032001";
+const char* ssid = "Redmi Note 9S";
+const char* password = "fullstack1";
 
-String serverName = "192.168.1.6";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
+String serverName = "192.168.43.73";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
 //String serverName = "example.com";   // OR REPLACE WITH YOUR DOMAIN NAME
 
 // String serverPath = "/SyncFolderPBL4/api/folders/file/1/upload";     // The default serverPath should be upload.php
@@ -61,8 +63,8 @@ void setup() {
   pinMode(echoPin,INPUT);    // chân echo sẽ nhận tín hiệu
   servo_12.write(0);
   servo_13.write(90);
-  pinMode(FLASH_PIN, OUTPUT);
-  // digitalWrite(FLASH_PIN, HIGH);
+  // pinMode(FLASH_PIN, OUTPUT);
+  // 
 
   WiFi.mode(WIFI_STA);
   Serial.println();
@@ -196,6 +198,7 @@ void loop() {
   delay(1000);
   if(distance<15)
   {
+    // digitalWrite(FLASH_PIN, HIGH);
     servo_12.write(90);
     delay(3000);
     servo_12.write(0);
@@ -223,7 +226,7 @@ String sendPhoto() {
   Serial.print(fb->len);
   Serial.println(" bytes");
 
-  digitalWrite(FLASH_PIN, LOW);
+  // digitalWrite(FLASH_PIN, LOW);
   Serial.println("Connecting to server: " + serverName);
   WiFiClient client;
   if (client.connect(serverName.c_str(), serverPort)) {
@@ -294,6 +297,7 @@ String sendPhoto() {
     int timoutTimer = 10000;
     long startTimer = millis();
     boolean state = false;
+    // digitalWrite(FLASH_PIN, LOW);
   }
   return "123";
 }

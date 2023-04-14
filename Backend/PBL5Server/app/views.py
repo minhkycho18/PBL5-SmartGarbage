@@ -31,8 +31,8 @@ class UploadViewSet(ViewSet):
 
     def create(self, request):
         file_uploaded = request.FILES.get('file_uploaded')
-        model_path = BASE_DIR + "\\app\\garbage.model"
-        print(BASE_DIR + "\\app\\garbage.model")
+        model_path = BASE_DIR + "\\app\\garbage_train.model"
+        print(BASE_DIR + "\\app\\garbage_train.model")
 
         # image_path =BASE_DIR + image.image.url.replace('/', '\\')
         # print(BASE_DIR + image.image.url.replace('/', '\\'))
@@ -55,17 +55,18 @@ class UploadViewSet(ViewSet):
         result = model.predict(image)
 
         if result[0][0] > result[0][1]:
-            print("không tái chế")
-            imageType = Type.objects.get(id=2)
-            image = Image(name=file_uploaded.name, image=uploaded_image['public_id'], type=imageType)
-            image.save()
-            return Response("Không tái chế")
-        else:
             print("tái chế")
             imageType = Type.objects.get(id=1)
             image = Image(name=file_uploaded.name, image=file_uploaded, type=imageType)
             image.save()
             return Response("tái chế")
+        else:
+            print("không tái chế")
+            imageType = Type.objects.get(id=2)
+            image = Image(name=file_uploaded.name, image=uploaded_image['public_id'], type=imageType)
+            image.save()
+            return Response("Không tái chế")
+            
 
 
 class ImageViewSet(ModelViewSet):
