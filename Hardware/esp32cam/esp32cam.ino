@@ -1,5 +1,3 @@
-
-
 #include <Arduino.h>
 #include <WiFi.h>
 #include "soc/soc.h"
@@ -16,12 +14,12 @@ long duration;
 int distance;
 // const int FLASH_PIN = 4;
 
-// const char* ssid = "RIO TANG 2";
-// const char* password = "20032001";
-const char* ssid = "Redmi Note 9S";
-const char* password = "fullstack1";
+const char* ssid = "RIO TANG 2";
+const char* password = "20032001";
+// const char* ssid = "Redmi Note 9S";
+// const char* password = "fullstack1";
 
-String serverName = "192.168.43.73";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
+String serverName = "192.168.1.5";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
 //String serverName = "example.com";   // OR REPLACE WITH YOUR DOMAIN NAME
 
 // String serverPath = "/SyncFolderPBL4/api/folders/file/1/upload";     // The default serverPath should be upload.php
@@ -172,14 +170,14 @@ void loop() {
     for(angle;  angle  >= 90 ;angle -=1)
           {
             servo_13.write(angle);
-            delay(7) ;
+            delay(10) ;
           }
 
   } else {
     for(angle;  angle  <= 90 ;angle +=1)
           {
             servo_13.write(angle);
-            delay(7) ;
+            delay(10) ;
           }
   }
   //cảm biến sóng âm
@@ -196,7 +194,7 @@ void loop() {
   Serial.print(distance);
   Serial.println("cm");
   delay(1000);
-  if(distance<15)
+  if(distance < 60)
   {
     // digitalWrite(FLASH_PIN, HIGH);
     servo_12.write(90);
@@ -275,16 +273,16 @@ String sendPhoto() {
             Serial.print(resCode);
             if(resCode.equals("Không tái chế"))
             {
-              for(int pos = 90;  pos  >30 ;pos -=1)
+              for(int pos = 90;  pos  >10 ;pos -=1)
                 {
                   servo_13.write(pos);
-                  delay(7) ;
+                  delay(10) ;
                 }
             } else {
-              for(int pos = 90;  pos  <150 ;pos +=1)
+              for(int pos = 90;  pos  <170 ;pos +=1)
                 {
                   servo_13.write(pos);
-                  delay(7) ;
+                  delay(10) ;
                 }
             }
             delay(1000);  
