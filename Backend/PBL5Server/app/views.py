@@ -2,6 +2,9 @@ from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from django.conf import settings
 from .serializers import UploadSerializer, ImageSerializer
+from channels.generic.websocket import WebsocketConsumer
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from app.paginations import MyPagination
 from app.models import Image, Type
@@ -54,6 +57,18 @@ class UploadViewSet(ViewSet):
 
         result = model.predict(image)
 
+        message = 'Hello, world!'
+
+        # Broadcast message to all clients in the room
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'test',
+            {
+                'type': 'chat_message',
+                'message': message
+            }
+        )
+        
         if result[0][0] > result[0][1]:
             print("tái chế")
             imageType = Type.objects.get(id=1)
@@ -85,4 +100,6 @@ class ImageViewSet(ModelViewSet):
         page = paginator.paginate_queryset(image, request)
 
         serializer = self.serializer_class(page, many=True)
+        
+        
         return paginator.get_paginated_response(serializer.data)

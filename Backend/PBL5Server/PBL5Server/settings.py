@@ -32,7 +32,7 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'cloudinary',
-    # 'daphne',
+    'daphne',
     'numpy',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,12 +78,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PBL5Server.wsgi.application'
 # mysite/settings.py
 # Daphne
-# ASGI_APPLICATION = "PBL5Server.asgi.application"
-# CHANNEL_LAYERS = {
-#     'default':{
-#         'BACKEND':'channels.layers.InMemoryChannelLayer'
-#     }
-# }
+ASGI_APPLICATION = "PBL5Server.asgi.application"
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database
