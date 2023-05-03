@@ -10,8 +10,10 @@ Servo servo_12;
 const int trigPin = 15;     // chân trig của HC-SR04
 const int echoPin = 14;     // chân echo của HC-SR04
 
+
 long duration;
 int distance;
+
 // const int FLASH_PIN = 4;
 
 const char* ssid = "RIO TANG 2";
@@ -56,9 +58,11 @@ void setup() {
   Serial.begin(115200);
   servo_13.attach(13);
   servo_12.attach(12);
- 	Serial.begin(115200);
+ 	// Serial.begin(115200);
   pinMode(trigPin,OUTPUT);   // chân trig sẽ phát tín hiệu
   pinMode(echoPin,INPUT);    // chân echo sẽ nhận tín hiệu
+
+
   servo_12.write(0);
   servo_13.write(90);
   // pinMode(FLASH_PIN, OUTPUT);
@@ -163,23 +167,7 @@ void setup() {
 }
 
 void loop() {
-  servo_13.write(90);
-  int angle = servo_13.read();
-  if(angle > 90)
-  {
-    for(angle;  angle  >= 90 ;angle -=1)
-          {
-            servo_13.write(angle);
-            delay(10) ;
-          }
 
-  } else {
-    for(angle;  angle  <= 90 ;angle +=1)
-          {
-            servo_13.write(angle);
-            delay(10) ;
-          }
-  }
   //cảm biến sóng âm
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -193,8 +181,8 @@ void loop() {
   Serial.print("Distance measured: ");
   Serial.print(distance);
   Serial.println("cm");
-  delay(1000);
-  if(distance < 60)
+  delay(2000);
+  if(distance < 40)
   {
     // digitalWrite(FLASH_PIN, HIGH);
     servo_12.write(90);
@@ -286,6 +274,24 @@ String sendPhoto() {
                 }
             }
             delay(1000);  
+            int angle = servo_13.read();
+              if(angle > 90)
+              {
+                for(angle;  angle  >= 90 ;angle -=1)
+                      {
+                        servo_13.write(angle);
+                        delay(10) ;
+                      }
+
+              } else {
+                for(angle;  angle  <= 90 ;angle +=1)
+                      {
+                        servo_13.write(angle);
+                        delay(10) ;
+                      }
+              }
+              delay(1000); 
+              
             break;
           }
         }
