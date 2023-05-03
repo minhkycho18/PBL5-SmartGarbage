@@ -57,8 +57,25 @@ class UploadViewSet(ViewSet):
 
         result = model.predict(image)
 
-        message = 'Hello, world!'
+        
+        if result[0][0] > result[0][1]:
+            print("tái chế")
+            # imageType = Type.objects.get(id=1)
+            # image = Image(name=file_uploaded.name, image=file_uploaded, type=imageType)
+            # image.save()
+            return Response("tái chế")
+        else:
+            print("không tái chế")
+            # imageType = Type.objects.get(id=2)
+            # image = Image(name=file_uploaded.name, image=uploaded_image['public_id'], type=imageType)
+            # image.save()
+            return Response("Không tái chế")
+            
 
+class NotifyViewSet(ViewSet):
+    
+    def list(self, request):
+        message = 'Full'
         # Broadcast message to all clients in the room
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
@@ -68,21 +85,8 @@ class UploadViewSet(ViewSet):
                 'message': message
             }
         )
-        
-        if result[0][0] > result[0][1]:
-            print("tái chế")
-            imageType = Type.objects.get(id=1)
-            image = Image(name=file_uploaded.name, image=file_uploaded, type=imageType)
-            image.save()
-            return Response("tái chế")
-        else:
-            print("không tái chế")
-            imageType = Type.objects.get(id=2)
-            image = Image(name=file_uploaded.name, image=uploaded_image['public_id'], type=imageType)
-            image.save()
-            return Response("Không tái chế")
-            
-
+        return Response('OK')
+    
 
 class ImageViewSet(ModelViewSet):
     queryset = Image.objects.all()
