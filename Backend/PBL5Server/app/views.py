@@ -34,8 +34,8 @@ class UploadViewSet(ViewSet):
 
     def create(self, request):
         file_uploaded = request.FILES.get('file_uploaded')
-        model_path = BASE_DIR + "\\app\\garbage_train.model"
-        print(BASE_DIR + "\\app\\garbage_train.model")
+        model_path = BASE_DIR + "\\app\\garbage_3labels.model"
+        print(BASE_DIR + "\\app\\garbage_3labels.model")
 
         # image_path =BASE_DIR + image.image.url.replace('/', '\\')
         # print(BASE_DIR + image.image.url.replace('/', '\\'))
@@ -56,20 +56,23 @@ class UploadViewSet(ViewSet):
         image = preprocess_input(image)
 
         result = model.predict(image)
-
+        labels = ['Nothing', 'Tái chế', 'Không tái chế']
+        max_val = np.argmax(result)
+        print(labels[max_val])
+        return Response(labels[max_val])
         
-        if result[0][0] > result[0][1]:
-            print("tái chế")
-            # imageType = Type.objects.get(id=1)
-            # image = Image(name=file_uploaded.name, image=file_uploaded, type=imageType)
-            # image.save()
-            return Response("tái chế")
-        else:
-            print("không tái chế")
-            # imageType = Type.objects.get(id=2)
-            # image = Image(name=file_uploaded.name, image=uploaded_image['public_id'], type=imageType)
-            # image.save()
-            return Response("Không tái chế")
+        # if result[0][0] > result[0][1]:
+        #     print("tái chế")
+        #     # imageType = Type.objects.get(id=1)
+        #     # image = Image(name=file_uploaded.name, image=file_uploaded, type=imageType)
+        #     # image.save()
+        #     return Response("tái chế")
+        # else:
+        #     print("không tái chế")
+        #     # imageType = Type.objects.get(id=2)
+        #     # image = Image(name=file_uploaded.name, image=uploaded_image['public_id'], type=imageType)
+        #     # image.save()
+        #     return Response("Không tái chế")
             
 
 class NotifyViewSet(ViewSet):
