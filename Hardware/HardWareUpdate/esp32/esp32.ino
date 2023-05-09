@@ -145,32 +145,8 @@ void setup() {
 }
 
 void loop() {
-
-  //cảm biến sóng âm
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH);
-
-  distance = duration * 0.034 / 2;
-
-  Serial.print("Distance measured: ");
-  Serial.print(distance);
-  Serial.println("cm");
-  delay(2000);
-  if(distance < 40 && distance != 0)
-  {
-    // digitalWrite(FLASH_PIN, HIGH);
-    servo_12.write(90);
-    delay(3000);
-    servo_12.write(0);
-    String s = sendPhoto();
-  } else
-    servo_12.write(0);
- 
-
+  delay(1000);
+  String s = sendPhoto();
 }
 
 String sendPhoto() {
