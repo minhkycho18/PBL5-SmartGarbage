@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 from cloudinary.models import CloudinaryField
 
 class Type(models.Model):
@@ -15,6 +14,11 @@ class Image(models.Model):
         return (
             f"https://res.cloudinary.com/dm7tnmhj4/image/upload/{self.image}.jpg"
         )
+
+class Notify(models.Model):
+    status = models.CharField(max_length=255)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, null=True)
+    time = models.DateTimeField()
     
     
     

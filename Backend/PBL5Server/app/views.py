@@ -1,13 +1,14 @@
+from re import T
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from django.conf import settings
-from .serializers import UploadSerializer, ImageSerializer
+from .serializers import NotifySerializer, UploadSerializer, ImageSerializer
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 from app.paginations import MyPagination
-from app.models import Image, Type
+from app.models import Image, Notify, Type
 import cloudinary
 cloudinary.config(
   cloud_name = "dm7tnmhj4",
@@ -19,10 +20,10 @@ import cloudinary.api
 import cloudinary.uploader
 
 from datetime import datetime
-# from keras.models import load_model
-# from keras.applications.mobilenet_v2 import preprocess_input
-# import cv2
-# import numpy as np
+from keras.models import load_model
+from keras.applications.mobilenet_v2 import preprocess_input
+import cv2
+import numpy as np
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ViewSets define the view behavior.
 class UploadViewSet(ViewSet):
-#     serializer_class = UploadSerializer
+    # serializer_class = UploadSerializer
 
     def create(self, request):
         # file_uploaded = request.FILES.get('file_uploaded')
@@ -60,8 +61,7 @@ class UploadViewSet(ViewSet):
         # max_val = np.argmax(result)
         # print(labels[max_val])
         # return Response(labels[max_val])
-        return Response(1)
-        
+        return None
         # if result[0][0] > result[0][1]:
         #     print("tái chế")
         #     # imageType = Type.objects.get(id=1)
@@ -76,20 +76,38 @@ class UploadViewSet(ViewSet):
         #     return Response("Không tái chế")
             
 
-class NotifyViewSet(ViewSet):
-    
+class NotifyViewSet(ModelViewSet):
+    queryset = Notify.objects.all().order_by('-time')
+    serializer_class = NotifySerializer
+    pagination_class = MyPagination
     def list(self, request):
-        message = 'Full'
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(self.queryset, request)
+
+        serializer = self.serializer_class(page, many=True)
+        
+        
+        return paginator.get_paginated_response(serializer.data)
+    
+    def create(self, request):
+        data_dict = dict(request.data)
+        print(data_dict)
+        typeTrash = Type.objects.get(id=data_dict["type_id"])
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        notify = Notify(status=data_dict["status"], time = now, type = typeTrash)
+        notify.save()
         # Broadcast message to all clients in the room
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             'test',
             {
                 'type': 'chat_message',
-                'message': message
+                'message': data_dict["status"],
+                'time': now,
+                'type_trash': typeTrash.name
             }
         )
-        return Response('OK')
+        return Response(None)
     
 
 class ImageViewSet(ModelViewSet):

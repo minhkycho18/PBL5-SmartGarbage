@@ -28,7 +28,11 @@ class ChatConsumer(WebsocketConsumer):
 
     def chat_message(self, event):
         message = event['message']
+        time = event['time']
+        type_trash = event['type_trash']
 
         self.send(text_data=json.dumps({
-            'message':message
+            'message':message,
+            'time': time,
+            'type_trash': type_trash
         }))

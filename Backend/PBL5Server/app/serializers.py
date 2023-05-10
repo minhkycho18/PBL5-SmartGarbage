@@ -1,7 +1,7 @@
 from django.forms import ImageField
 from rest_framework import serializers
 from datetime import datetime
-from app.models import Image, Type
+from app.models import Image, Type, Notify
 
 # Serializers define the API representation.
 class UploadSerializer(serializers.Serializer):
@@ -12,6 +12,14 @@ class UploadSerializer(serializers.Serializer):
 class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
+        fields = '__all__'
+
+class NotifySerializer(serializers.ModelSerializer):
+    type = TypeSerializer()
+    time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    
+    class Meta:
+        model = Notify
         fields = '__all__'
 
 class ImageSerializer(serializers.ModelSerializer):
