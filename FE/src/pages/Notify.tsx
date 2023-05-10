@@ -1,4 +1,4 @@
-import { Tag } from 'antd'
+import { Pagination, Tag } from 'antd'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -11,25 +11,32 @@ import { Event } from 'src/types/events.type'
 
 const columns = [
   {
-    dataIndex: 'name',
-    key: 'name',
-    title: 'Name'
+    dataIndex: 'time',
+    key: 'time',
+    title: 'Time'
   },
   {
-    dataIndex: 'date',
-    key: 'date',
-    title: 'date'
+    dataIndex: 'status',
+    key: 'status',
+    title: 'Status',
+    render: (status: string) => {
+      return <span className={status === 'Clean' ? ' !text-green-500' : ''}>{status}</span>
+    }
   },
   {
     dataIndex: 'type',
     key: 'type',
-    render: (type: any) => (type.id === 1 ? <Tag title='Tái chế' /> : <Tag title='Không tái chế' />),
-    title: 'type'
+    render: (type: any) => {
+      return type.id === '1' ? <Tag color='green'>Tái chế</Tag> : <Tag color='red'>Không tái chế</Tag>
+    },
+    title: 'Type'
   }
 ]
 
-export default function Sponsors() {
+export default function Notify() {
   const navigate = useNavigate()
+  const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
   const [garbages, setGarbages] = useState([])
   const setSelectedItem = (item: Event) => {
     console.log(item)
@@ -43,11 +50,16 @@ export default function Sponsors() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get('http://localhost:8000/images/?date=2023-04-06&page=2')
+      const res = await axios.get(`http://localhost:8000/notify/?page=${page}`)
       setGarbages(res?.data?.results)
+      setTotal(res.data?.count)
     }
     getData()
-  }, [])
+  }, [page])
+
+  const handleChangePage = (val: number) => {
+    setPage(val)
+  }
   return (
     <AdminGuard>
       <HeaderPage
@@ -61,13 +73,12 @@ export default function Sponsors() {
         columns={columns}
         currentPage={1}
         dataSource={garbages}
-        onDelete={handleDelete}
-        onEdit={setSelectedItem}
         pageSize={10}
         total={40}
         onChange={onChange}
         loading={false}
       />
+      <Pagination total={total} defaultCurrent={page} onChange={handleChangePage} />
     </AdminGuard>
   )
 }

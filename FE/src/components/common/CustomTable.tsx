@@ -42,7 +42,7 @@ function CustomTable<RecordType extends Dictionary<unknown>>({
   exportExcelBtn,
   onEdit,
   primaryKey,
-  actions = true,
+  actions = false,
   onChange,
   onRow,
   extraLeft,

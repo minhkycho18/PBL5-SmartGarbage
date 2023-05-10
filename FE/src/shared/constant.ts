@@ -9,7 +9,7 @@ export const SIZEBAR_OPTIONS = [
   {
     key: 'overview',
     label: 'Overview',
-    path: '/admin/overview',
+    path: '/admin/notifications',
     icon: SolutionOutlined
   },
   {
