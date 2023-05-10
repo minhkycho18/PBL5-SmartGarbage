@@ -27,7 +27,11 @@ const columns = [
     dataIndex: 'type',
     key: 'type',
     render: (type: any) => {
+<<<<<<< HEAD
       return type.id === 1 ? <Tag color='green'>Tái chế</Tag> : <Tag color='red'>Không tái chế</Tag>
+=======
+      return type.id === '1' ? <Tag color='green'>Tái chế</Tag> : <Tag color='red'>Không tái chế</Tag>
+>>>>>>> 52019c5 (FE)
     },
     title: 'Type'
   }
@@ -63,7 +67,11 @@ export default function Notify() {
   return (
     <AdminGuard>
       <HeaderPage
+<<<<<<< HEAD
         title='Thông báo'
+=======
+        title='Rác'
+>>>>>>> 52019c5 (FE)
         onCreate={() => {
           navigate(`${PATH_URL.sponsors}/form`)
         }}
