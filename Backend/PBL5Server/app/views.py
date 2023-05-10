@@ -31,37 +31,37 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ViewSets define the view behavior.
 class UploadViewSet(ViewSet):
-    # serializer_class = UploadSerializer
+    serializer_class = UploadSerializer
 
     def create(self, request):
-        # file_uploaded = request.FILES.get('file_uploaded')
-        # model_path = BASE_DIR + "\\app\\garbage_3labels.model"
-        # print(BASE_DIR + "\\app\\garbage_3labels.model")
+        file_uploaded = request.FILES.get('file_uploaded')
+        model_path = BASE_DIR + "\\app\\garbage_3labels.model"
+        print(BASE_DIR + "\\app\\garbage_3labels.model")
 
-        # # image_path =BASE_DIR + image.image.url.replace('/', '\\')
-        # # print(BASE_DIR + image.image.url.replace('/', '\\'))
-        # image_path = os.path.join(settings.MEDIA_ROOT, "image.jpg")
+        # image_path =BASE_DIR + image.image.url.replace('/', '\\')
+        # print(BASE_DIR + image.image.url.replace('/', '\\'))
+        image_path = os.path.join(settings.MEDIA_ROOT, "image.jpg")
         
                 
-        # # uploaded_image = cloudinary.uploader.upload(file_uploaded, folder='my_folder')
-        # print(image_path.replace('/', '\\'))
+        # uploaded_image = cloudinary.uploader.upload(file_uploaded, folder='my_folder')
+        print(image_path.replace('/', '\\'))
 
-        # with open(image_path, 'wb+') as destination:
-        #     for chunk in file_uploaded.chunks():
-        #         destination.write(chunk)
-        # model = load_model(model_path)
-        # image = cv2.imread(image_path)
-        # image = cv2.resize(image, (224, 224))
-        # image = np.expand_dims(image, axis=0)
-        # image = image.astype("float32")
-        # image = preprocess_input(image)
+        with open(image_path, 'wb+') as destination:
+            for chunk in file_uploaded.chunks():
+                destination.write(chunk)
+        model = load_model(model_path)
+        image = cv2.imread(image_path)
+        image = cv2.resize(image, (224, 224))
+        image = np.expand_dims(image, axis=0)
+        image = image.astype("float32")
+        image = preprocess_input(image)
 
-        # result = model.predict(image)
-        # labels = ['Nothing', 'Tái chế', 'Không tái chế']
-        # max_val = np.argmax(result)
-        # print(labels[max_val])
-        # return Response(labels[max_val])
-        return None
+        result = model.predict(image)
+        labels = ['Nothing', 'Tái chế', 'Không tái chế']
+        max_val = np.argmax(result)
+        print(labels[max_val])
+        return Response(labels[max_val])
+        # return None
         # if result[0][0] > result[0][1]:
         #     print("tái chế")
         #     # imageType = Type.objects.get(id=1)
