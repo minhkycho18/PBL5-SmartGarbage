@@ -27,7 +27,7 @@ const columns = [
     dataIndex: 'type',
     key: 'type',
     render: (type: any) => {
-      return type.id === '1' ? <Tag color='green'>Tái chế</Tag> : <Tag color='red'>Không tái chế</Tag>
+      return type.id === 1 ? <Tag color='green'>Tái chế</Tag> : <Tag color='red'>Không tái chế</Tag>
     },
     title: 'Type'
   }
@@ -63,7 +63,7 @@ export default function Notify() {
   return (
     <AdminGuard>
       <HeaderPage
-        title='Rác'
+        title='Thông báo'
         onCreate={() => {
           navigate(`${PATH_URL.sponsors}/form`)
         }}

@@ -23,7 +23,10 @@ const columns = [
   {
     dataIndex: 'type',
     key: 'type',
-    render: (type: any) => (type.id === 1 ? <Tag title='Tái chế' /> : <Tag title='Không tái chế' />),
+    render: (type: any) => {
+      console.log(type)
+      return type.id === 1 ? <Tag title='Tái chế' /> : <Tag title='Không tái chế' />
+    },
     title: 'type'
   }
 ]
