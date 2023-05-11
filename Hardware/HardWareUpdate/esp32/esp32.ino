@@ -16,12 +16,12 @@ int distance;
 
 // const int FLASH_PIN = 4;
 
-const char* ssid = "RIO TANG 2";
-const char* password = "20032001";
-// const char* ssid = "Redmi Note 9S";
-// const char* password = "fullstack1";
+// const char* ssid = "RIO TANG 2";
+// const char* password = "20032001";
+const char* ssid = "Redmi Note 9S";
+const char* password = "fullstack1";
 
-String serverName = "192.168.1.10";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
+String serverName = "192.168.43.73";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
 //String serverName = "example.com";   // OR REPLACE WITH YOUR DOMAIN NAME
 
 // String serverPath = "/SyncFolderPBL4/api/folders/file/1/upload";     // The default serverPath should be upload.php

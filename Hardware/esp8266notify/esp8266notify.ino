@@ -2,15 +2,18 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 
-const char* ssid = "RIO TANG 2";
-const char* password = "20032001";
+// const char* ssid = "RIO TANG 2";
+// const char* password = "20032001";
+
+const char* ssid = "Redmi Note 9S";
+const char* password = "fullstack1";
 const int trigRightPin = D1;     // chân trig của HC-SR04
 const int echoRightPin = D2;     // chân echo của HC-SR04
 
 const int trigLeftPin = D3;     // chân trig của HC-SR04
 const int echoLeftPin = D4;     // chân echo của HC-SR04
 //Your Domain name with URL path or IP address with path
-String serverName = "http://192.168.1.5:8000/notify/";
+String serverName = "http://192.168.43.73:8000/notify/";
 
 
 void setup() {

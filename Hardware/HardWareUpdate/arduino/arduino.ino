@@ -26,7 +26,7 @@ void loop() {
   Serial.print("Distance measured: ");
   Serial.print(distance);
   Serial.println("cm");
-  if(distance < 65 && distance != 0)
+  if(distance < 55 && distance != 0)
   {
     for(int pos = 0;  pos <=90 ;pos +=1)
         {
