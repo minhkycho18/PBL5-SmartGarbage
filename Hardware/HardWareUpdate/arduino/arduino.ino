@@ -13,7 +13,7 @@ void setup() {
   pinMode(echo,INPUT);    // chân echo sẽ nhận tín hiệu
 }
 void loop() {
-  //cảm biến sóng âm
+  //cảm biến sóng âm  
   digitalWrite(trig, LOW);
   delayMicroseconds(2);
   digitalWrite(trig, HIGH);

@@ -7,8 +7,8 @@
 Servo servo_13;
 Servo servo_12;
 
-const int trigPin = 15;     // chân trig của HC-SR04
-const int echoPin = 14;     // chân echo của HC-SR04
+// const int trigPin = 15;     // chân trig của HC-SR04
+// const int echoPin = 14;     // chân echo của HC-SR04
 
 
 long duration;
@@ -16,12 +16,12 @@ int distance;
 
 // const int FLASH_PIN = 4;
 
-// const char* ssid = "RIO TANG 2";
-// const char* password = "20032001";
-const char* ssid = "Redmi Note 9S";
-const char* password = "fullstack1";
+const char* ssid = "RIO TANG 2";
+const char* password = "20032001";
+// const char* ssid = "Redmi Note 9S";
+// const char* password = "fullstack1";
 
-String serverName = "192.168.43.73";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
+String serverName = "192.168.1.4";   // REPLACE WITH YOUR Raspberry Pi IP ADDRESS
 //String serverName = "example.com";   // OR REPLACE WITH YOUR DOMAIN NAME
 
 // String serverPath = "/SyncFolderPBL4/api/folders/file/1/upload";     // The default serverPath should be upload.php
@@ -56,14 +56,14 @@ String response;
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
   Serial.begin(115200);
-  servo_13.attach(13);
-  servo_12.attach(12);
+  servo_13.attach(12);
+  // servo_12.attach(12);
  	// Serial.begin(115200);
-  pinMode(trigPin,OUTPUT);   // chân trig sẽ phát tín hiệu
-  pinMode(echoPin,INPUT);    // chân echo sẽ nhận tín hiệu
+  // pinMode(trigPin,OUTPUT);   // chân trig sẽ phát tín hiệu
+  // pinMode(echoPin,INPUT);    // chân echo sẽ nhận tín hiệu
 
 
-  servo_12.write(0);
+  // servo_12.write(0);
   servo_13.write(90);
   // pinMode(FLASH_PIN, OUTPUT);
   // 
@@ -147,6 +147,7 @@ void setup() {
 void loop() {
   delay(1000);
   String s = sendPhoto();
+  delay(1000);
 }
 
 String sendPhoto() {
