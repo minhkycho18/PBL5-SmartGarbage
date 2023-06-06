@@ -34,6 +34,11 @@ const columns = [
   }
 ]
 
+const getTrashColor = (message: string) => {
+  if (message === 'Clean') return 'bg-green-400'
+  if (message === 'Full') return 'bg-red-400'
+}
+
 export default function Notify() {
   const navigate = useNavigate()
   const [total, setTotal] = useState(0)
@@ -87,14 +92,14 @@ export default function Notify() {
       <div className='mb-4 flex justify-center'>
         <div
           className={` mr-3 flex h-32 w-20 items-center justify-center bg-green-500  ${
-            type === 'Recyclable' && message === 'Clean' ? 'bg-green-500' : 'bg-red-500'
+            type === 'Recyclable' && getTrashColor(message)
           }`}
         >
           Tái chế
         </div>
         <div
           className={`flex h-32 w-20 items-center justify-center bg-green-500 text-center ${
-            type === 'Non-Recyclable' && message === 'Clean' ? 'bg-green-500' : 'bg-red-500'
+            type === 'Non-Recyclable' && getTrashColor(message)
           }`}
         >
           Không tái chế
