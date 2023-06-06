@@ -72,7 +72,9 @@ export default function Notify() {
       setTotal(res.data?.count)
     }
     getData()
-  }, [page])
+    console.log(garbages.filter((item: any) => item.type.id === 'Recyclable')?.[0])
+    console.log(garbages.filter((item: any) => item.type.id === 'Non-Recyclable')?.[0])
+  }, [page, lastMessage])
 
   const handleChangePage = (val: number) => {
     setPage(val)
@@ -91,16 +93,20 @@ export default function Notify() {
       </div>
       <div className='mb-4 flex justify-center'>
         <div
-          className={` mr-3 flex h-32 w-20 items-center justify-center bg-green-500  ${
-            type === 'Recyclable' && getTrashColor(message)
-          }`}
+          className={` mr-3 flex h-32 w-20 ${
+            (garbages.filter((item: any) => item.type.name === 'Recyclable')?.[0] as any)?.status === 'Full'
+              ? 'bg-red-400'
+              : 'bg-green-400'
+          } items-center justify-center bg-green-500 `}
         >
           Tái chế
         </div>
         <div
-          className={`flex h-32 w-20 items-center justify-center bg-green-500 text-center ${
-            type === 'Non-Recyclable' && getTrashColor(message)
-          }`}
+          className={`flex h-32 w-20 ${
+            (garbages.filter((item: any) => item.type.name === 'Non-Recyclable')?.[0] as any)?.status === 'Full'
+              ? 'bg-red-400'
+              : 'bg-green-400'
+          } items-center justify-center bg-green-500 text-center `}
         >
           Không tái chế
         </div>
