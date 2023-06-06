@@ -10,9 +10,7 @@ function App() {
   const { sendMessage, lastMessage } = useWebSocket('ws://localhost:8000/ws/socket-server/')
   useEffect(() => {
     if (lastMessage !== null) {
-      console.log(lastMessage, 'lastmsg')
       const { data, message, type_trash, time } = JSON.parse(lastMessage?.data)
-      console.log(message, data)
       toast.success(`${type_trash} trash was ${message}ed at ${time} `, {
         position: 'top-right',
         autoClose: 2000

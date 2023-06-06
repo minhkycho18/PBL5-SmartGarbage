@@ -2,6 +2,7 @@ import { Pagination, Tag } from 'antd'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket'
 import CustomTable from 'src/components/common/CustomTable'
 import HeaderPage from 'src/components/common/HeaderPage'
 import { EVENTS } from 'src/data/events.dummy'
@@ -38,6 +39,8 @@ export default function Notify() {
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [garbages, setGarbages] = useState([])
+  const [type, setType] = useState('')
+  const [message, setMessage] = useState('')
   const setSelectedItem = (item: Event) => {
     console.log(item)
   }
@@ -47,6 +50,15 @@ export default function Notify() {
   const onChange = () => {
     console.log('change')
   }
+  const { sendMessage, lastMessage } = useWebSocket('ws://localhost:8000/ws/socket-server/')
+  useEffect(() => {
+    if (lastMessage !== null) {
+      const { data, message, type_trash, time } = JSON.parse(lastMessage?.data)
+
+      setType(type_trash)
+      setMessage(message)
+    }
+  }, [lastMessage])
 
   useEffect(() => {
     const getData = async () => {
@@ -69,6 +81,26 @@ export default function Notify() {
         }}
         breadcrumbList={[]}
       />
+      <div className='my-2 flex items-center justify-center text-2xl font-bold'>
+        <span>Tình trạng thùng rác</span>
+      </div>
+      <div className='mb-4 flex justify-center'>
+        <div
+          className={` mr-3 flex h-32 w-20 items-center justify-center bg-green-500  ${
+            type === 'Recyclable' && message === 'Clean' ? 'bg-green-500' : 'bg-red-500'
+          }`}
+        >
+          Tái chế
+        </div>
+        <div
+          className={`flex h-32 w-20 items-center justify-center bg-green-500 text-center ${
+            type === 'Non-Recyclable' && message === 'Clean' ? 'bg-green-500' : 'bg-red-500'
+          }`}
+        >
+          Không tái chế
+        </div>
+      </div>
+
       <CustomTable<Event>
         columns={columns}
         currentPage={1}
